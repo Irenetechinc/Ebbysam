@@ -1,0 +1,19 @@
+packages:
+  "aos": "Scroll animations for product cards"
+  "@types/aos": "Types for AOS"
+  "gsap": "Hero text animations"
+  "zustand": "Cart state management"
+  "lucide-react": "Icons"
+
+images:
+  - path: "artifacts/ebby-sam/public/images/hero-bg.png"
+    description: "Dark luxury fashion editorial, elegant models in gold lighting, high-end aesthetic, fashion campaign"
+    aspect_ratio: "16:9"
+  - path: "artifacts/ebby-sam/public/images/about-bg.png"
+    description: "Luxury gold jewelry and premium leather accessories on dark marble background, cinematic lighting"
+    aspect_ratio: "16:9"
+
+notes:
+  - Cart state persists via zustand to localStorage
+  - WhatsApp order functionality opens direct link
+  - Admin features included at /admin

@@ -1,0 +1,31 @@
+kind = "web"
+previewPath = "/"
+title = "Ebby Sam Luxury"
+version = "1.0.0"
+id = "artifacts/ebby-sam"
+router = "path"
+
+[[integratedSkills]]
+name = "react-vite"
+version = "1.0.0"
+
+[[services]]
+name = "web"
+paths = [ "/" ]
+localPort = 25861
+
+[services.development]
+run = "pnpm --filter @workspace/ebby-sam run dev"
+
+[services.production]
+build = [ "pnpm", "--filter", "@workspace/ebby-sam", "run", "build" ]
+publicDir = "artifacts/ebby-sam/dist/public"
+serve = "static"
+
+[[services.production.rewrites]]
+from = "/*"
+to = "/index.html"
+
+[services.env]
+PORT = "25861"
+BASE_PATH = "/"
