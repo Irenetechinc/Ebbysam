@@ -27,7 +27,7 @@ FROM deps AS builder
 
 # Copy source for the api-server and its dependencies.
 # lib/db is intentionally excluded — the api-server uses Supabase directly.
-COPY package.json pnpm-workspace.yaml ./
+COPY package.json pnpm-workspace.yaml tsconfig.base.json ./
 COPY artifacts/api-server/ ./artifacts/api-server/
 COPY lib/api-zod/ ./lib/api-zod/
 
