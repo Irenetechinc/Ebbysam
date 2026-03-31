@@ -1,0 +1,33 @@
+# Git
+.git
+.gitignore
+
+# Node
+**/node_modules
+**/.pnpm-debug.log
+
+# Build artifacts (rebuilt inside Docker)
+**/dist
+**/.cache
+
+# Replit / dev-only
+.replit
+replit.nix
+.breakpoints
+.local
+.upm
+.config
+
+# Frontend artifacts (not needed for API-only Docker image)
+artifacts/ebby-sam
+artifacts/mockup-sandbox
+
+# Test / docs
+**/*.test.ts
+**/*.spec.ts
+**/__tests__
+*.md
+
+# OS
+.DS_Store
+Thumbs.db
