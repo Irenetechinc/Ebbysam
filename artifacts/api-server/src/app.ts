@@ -2,7 +2,6 @@ import express, { type Express } from "express";
 import cors from "cors";
 import pinoHttp from "pino-http";
 import { existsSync } from "fs";
-import { fileURLToPath } from "url";
 import path from "path";
 import router from "./routes";
 import { logger } from "./lib/logger";
@@ -47,29 +46,28 @@ app.use(cors(corsOptions));
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 
-// Resolve the directory of this bundle at runtime.
-// In the compiled output, import.meta.url points to dist/index.mjs,
-// so publicDir resolves to dist/public — where the frontend build is copied.
-const thisDir = path.dirname(fileURLToPath(import.meta.url));
-const publicDir = path.join(thisDir, "public");
+// In production (Railway/Docker), the frontend static files are copied to
+// /app/public by the Dockerfile. WORKDIR is /app so process.cwd() === /app.
+// In local dev this directory won't exist — static serving is simply skipped.
+const publicDir = path.join(process.cwd(), "public");
+const indexHtml = path.join(publicDir, "index.html");
+const hasFrontend = existsSync(indexHtml);
 
-// Serve the compiled React frontend (only present in production/Railway builds)
-if (existsSync(publicDir)) {
+logger.info({ publicDir, hasFrontend }, "Static frontend serving");
+
+if (hasFrontend) {
   app.use(express.static(publicDir));
 }
 
 // All API routes
 app.use("/api", router);
 
-// SPA fallback — send index.html for any non-API route so client-side
-// routing (wouter) can handle the path on the frontend
-app.get("*", (_req, res) => {
-  const indexHtml = path.join(publicDir, "index.html");
-  if (existsSync(indexHtml)) {
+// SPA fallback — send index.html for any non-API route so that
+// client-side routing (wouter) handles the path in the browser
+if (hasFrontend) {
+  app.get("*", (_req, res) => {
     res.sendFile(indexHtml);
-  } else {
-    res.status(404).json({ error: "Not found" });
-  }
-});
+  });
+}
 
 export default app;

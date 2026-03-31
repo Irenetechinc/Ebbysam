@@ -31,7 +31,7 @@ COPY package.json pnpm-workspace.yaml ./
 COPY artifacts/api-server/ ./artifacts/api-server/
 COPY lib/api-zod/ ./lib/api-zod/
 
-# Build the api-server bundle (esbuild → dist/index.mjs)
+# Build the api-server bundle (esbuild → artifacts/api-server/dist/index.mjs)
 RUN pnpm --filter @workspace/api-server run build
 
 # Copy frontend source and its workspace dependency
@@ -40,21 +40,22 @@ COPY lib/api-client-react/ ./lib/api-client-react/
 
 # Build the React frontend.
 # PORT is required by vite.config validation but only used for the dev server,
-# not baked into the static output. BASE_PATH=/ serves the app from the root.
+# not baked into the static output. BASE_PATH=/ serves the app from root.
 RUN PORT=3000 BASE_PATH=/ pnpm --filter @workspace/ebby-sam run build
 
-# Place the frontend's static output inside the api-server dist so they
-# ship together in the runner image: dist/public → served at /
-RUN cp -r artifacts/ebby-sam/dist/public artifacts/api-server/dist/public
-
 # ── Production image ───────────────────────────────────────────────────────────
-# Minimal image: only Node + the compiled bundle + frontend static files
+# Minimal image: Node + the compiled server bundle + frontend static files.
+# WORKDIR is /app. The server uses process.cwd() === /app to locate /app/public.
 FROM node:20-alpine AS runner
 
 WORKDIR /app
 
-# Copy the api-server bundle AND the frontend static files (dist/public/)
+# API server bundle
 COPY --from=builder /app/artifacts/api-server/dist ./dist
+
+# Frontend static files — copied to /app/public (separate from /app/dist).
+# app.ts finds these via path.join(process.cwd(), "public") === /app/public.
+COPY --from=builder /app/artifacts/ebby-sam/dist/public ./public
 
 ENV NODE_ENV=production
 
