@@ -18,8 +18,7 @@ replit.nix
 .upm
 .config
 
-# Frontend artifacts (not needed for API-only Docker image)
-artifacts/ebby-sam
+# Mockup sandbox is not needed for production
 artifacts/mockup-sandbox
 
 # Test / docs
