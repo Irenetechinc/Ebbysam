@@ -41,7 +41,7 @@ COPY lib/api-client-react/ ./lib/api-client-react/
 # Build the React frontend.
 # PORT is required by vite.config validation but only used for the dev server,
 # not baked into the static output. BASE_PATH=/ serves the app from root.
-RUN PORT=3000 BASE_PATH=/ pnpm --filter @workspace/ebby-sam run build
+RUN PORT=8080 BASE_PATH=/ pnpm --filter @workspace/ebby-sam run build
 
 # ── Production image ───────────────────────────────────────────────────────────
 # Minimal image: Node + the compiled server bundle + frontend static files.
