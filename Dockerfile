@@ -1,4 +1,4 @@
-FROM node:20-alpine AS base
+FROM node:20-slim AS base
 
 # Enable corepack — built into Node 20, installs pnpm without npm install -g
 RUN corepack enable && corepack prepare pnpm@10 --activate
@@ -11,13 +11,14 @@ FROM base AS deps
 # Copy manifests for workspace dependency resolution.
 # All workspace package.json files are needed for pnpm --frozen-lockfile.
 COPY package.json pnpm-workspace.yaml pnpm-lock.yaml ./
-COPY artifacts/api-server/package.json ./artifacts/api-server/
-COPY artifacts/ebby-sam/package.json   ./artifacts/ebby-sam/
-COPY lib/api-client-react/package.json ./lib/api-client-react/
-COPY lib/api-spec/package.json         ./lib/api-spec/
-COPY lib/api-zod/package.json          ./lib/api-zod/
-COPY lib/db/package.json               ./lib/db/
-COPY scripts/package.json              ./scripts/
+COPY artifacts/api-server/package.json      ./artifacts/api-server/
+COPY artifacts/ebby-sam/package.json        ./artifacts/ebby-sam/
+COPY artifacts/mockup-sandbox/package.json  ./artifacts/mockup-sandbox/
+COPY lib/api-client-react/package.json      ./lib/api-client-react/
+COPY lib/api-spec/package.json              ./lib/api-spec/
+COPY lib/api-zod/package.json               ./lib/api-zod/
+COPY lib/db/package.json                    ./lib/db/
+COPY scripts/package.json                   ./scripts/
 
 # --ignore-scripts bypasses the root preinstall pnpm-guard (safe: we ARE using pnpm)
 RUN pnpm install --frozen-lockfile --ignore-scripts
@@ -46,7 +47,7 @@ RUN PORT=8080 BASE_PATH=/ pnpm --filter @workspace/ebby-sam run build
 # ── Production image ───────────────────────────────────────────────────────────
 # Minimal image: Node + the compiled server bundle + frontend static files.
 # WORKDIR is /app. The server uses process.cwd() === /app to locate /app/public.
-FROM node:20-alpine AS runner
+FROM node:20-slim AS runner
 
 WORKDIR /app
 

@@ -94,3 +94,21 @@ Generated React Query hooks and fetch client from the OpenAPI spec (e.g. `useHea
 ### `scripts` (`@workspace/scripts`)
 
 Utility scripts package. Each script is a `.ts` file in `src/` with a corresponding npm script in `package.json`. Run scripts via `pnpm --filter @workspace/scripts run <script>`. Scripts can import any workspace package (e.g., `@workspace/db`) by adding it as a dependency in `scripts/package.json`.
+
+## Deployment (Railway)
+
+The app is deployed on Railway using Docker. The `Dockerfile` is a multi-stage build:
+1. **deps** — installs all workspace packages with `pnpm install --frozen-lockfile`
+2. **builder** — builds the API server (esbuild) and the React frontend (vite)
+3. **runner** — minimal Node image with only the compiled output
+
+**Important:** The base image is `node:20-slim` (Debian/glibc), NOT `node:20-alpine`. The `pnpm-workspace.yaml` overrides exclude the musl (Alpine) variants of native binaries: `@tailwindcss/oxide-linux-x64-musl`, `rollup-linux-x64-musl`, and `lightningcss-linux-x64-musl`. Using Alpine would silently fail the Vite build with exit code 1.
+
+The frontend (`artifacts/ebby-sam`) is built as static files and served by the Express API server from `/app/public`. No separate frontend server runs in production.
+
+## Local Development (Replit)
+
+- **Start application** workflow — Vite dev server for `ebby-sam` on port 25861, proxies `/api` to localhost:8080
+- **API Server** workflow — Express server on port 8080, connects to Supabase for data
+
+Environment variables `SUPABASE_URL` and `SUPABASE_SERVICE_ROLE_KEY` are set in `.replit` userenv shared config.
