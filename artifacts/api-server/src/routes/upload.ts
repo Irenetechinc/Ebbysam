@@ -1,20 +1,10 @@
 import { Router, type IRouter } from "express";
 import multer from "multer";
-import { createClient } from "@supabase/supabase-js";
+import { supabase } from "../lib/supabase";
 import crypto from "crypto";
 
 const router: IRouter = Router();
-
-const SUPABASE_URL = process.env.SUPABASE_URL;
-const SUPABASE_SERVICE_ROLE_KEY = process.env.SUPABASE_SERVICE_ROLE_KEY;
 const BUCKET = "product-images";
-
-function getSupabase() {
-  if (!SUPABASE_URL || !SUPABASE_SERVICE_ROLE_KEY) {
-    throw new Error("SUPABASE_URL and SUPABASE_SERVICE_ROLE_KEY must be set");
-  }
-  return createClient(SUPABASE_URL, SUPABASE_SERVICE_ROLE_KEY);
-}
 
 const upload = multer({
   storage: multer.memoryStorage(),
@@ -29,11 +19,7 @@ const upload = multer({
 
 router.post("/upload-image", upload.single("file"), async (req, res) => {
   try {
-    if (!req.file) {
-      return res.status(400).json({ error: "No file uploaded" });
-    }
-
-    const supabase = getSupabase();
+    if (!req.file) return res.status(400).json({ error: "No file uploaded" });
 
     const ext = req.file.originalname.split(".").pop()?.toLowerCase() ?? "jpg";
     const key = `products/${crypto.randomUUID()}.${ext}`;
@@ -51,12 +37,10 @@ router.post("/upload-image", upload.single("file"), async (req, res) => {
     }
 
     const { data: urlData } = supabase.storage.from(BUCKET).getPublicUrl(key);
-
     res.json({ publicUrl: urlData.publicUrl, key });
   } catch (err: unknown) {
-    const message = err instanceof Error ? err.message : "Upload failed";
     req.log.error({ err }, "Image upload error");
-    res.status(500).json({ error: message });
+    res.status(500).json({ error: err instanceof Error ? err.message : "Upload failed" });
   }
 });
 
