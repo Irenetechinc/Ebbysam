@@ -9,6 +9,7 @@ WORKDIR /app
 FROM base AS deps
 
 # Copy manifests for workspace dependency resolution
+# Note: all workspace package.json files are needed for pnpm --frozen-lockfile
 COPY package.json pnpm-workspace.yaml pnpm-lock.yaml ./
 COPY artifacts/api-server/package.json ./artifacts/api-server/
 COPY lib/api-client-react/package.json ./lib/api-client-react/
@@ -23,11 +24,14 @@ RUN pnpm install --frozen-lockfile --ignore-scripts
 # ── Build phase ────────────────────────────────────────────────────────────────
 FROM deps AS builder
 
-# Copy the full source tree
-COPY . .
+# Copy only the source files needed to build the api-server.
+# The api-server uses Supabase directly — lib/db (Drizzle/PostgreSQL) is NOT
+# included here to prevent it from being accidentally bundled by esbuild.
+COPY package.json pnpm-workspace.yaml ./
+COPY artifacts/api-server/ ./artifacts/api-server/
+COPY lib/api-zod/ ./lib/api-zod/
 
-# Bundle everything into artifacts/api-server/dist/index.mjs via esbuild
-# All workspace libs (db, api-zod, etc.) are compiled in — no runtime node_modules needed
+# Bundle the api-server into artifacts/api-server/dist/index.mjs via esbuild
 RUN pnpm --filter @workspace/api-server run build
 
 # ── Production image ───────────────────────────────────────────────────────────
