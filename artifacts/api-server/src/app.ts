@@ -65,7 +65,7 @@ app.use("/api", router);
 // SPA fallback — send index.html for any non-API route so that
 // client-side routing (wouter) handles the path in the browser
 if (hasFrontend) {
-  app.get("*", (_req, res) => {
+  app.get("/{*path}", (_req, res) => {
     res.sendFile(indexHtml);
   });
 }
