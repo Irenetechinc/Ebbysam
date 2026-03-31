@@ -67,12 +67,6 @@ export default function Navbar() {
             >
               Collection
             </a>
-            <Link
-              href="/admin"
-              className={`text-sm uppercase tracking-widest hover:text-primary transition-colors ${location === '/admin' ? 'text-primary' : 'text-foreground/80'}`}
-            >
-              Admin
-            </Link>
           </div>
 
           {/* Cart Button */}
@@ -118,13 +112,6 @@ export default function Navbar() {
             >
               Collection
             </a>
-            <Link
-              href="/admin"
-              onClick={() => setMobileMenuOpen(false)}
-              className="text-2xl font-display uppercase tracking-widest text-foreground hover:text-primary transition-colors"
-            >
-              Admin
-            </Link>
           </div>
         </div>
       )}
