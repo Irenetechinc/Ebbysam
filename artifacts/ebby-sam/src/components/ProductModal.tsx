@@ -32,8 +32,8 @@ export default function ProductModal({ product, onClose }: ProductModalProps) {
   };
 
   const handleDirectOrder = () => {
-    const number = "2348123456789";
-    const message = `Hello Ebby Sam! 👋\n\nI'd like to place an order for:\n\n• ${product.name}\nSize: ${selectedSize || 'N/A'}\nColor: ${selectedColor || 'N/A'}\nQty: ${quantity}\nPrice: ₦${Number(product.price).toLocaleString()}\n\nPlease confirm availability and arrange delivery. Thank you!`;
+    const number = "2347039275166";
+    const message = `Hello Eby-Sam fashion and luxary collections! 👋\n\nI'd like to place an order for:\n\n• ${product.name}\nSize: ${selectedSize || 'N/A'}\nColor: ${selectedColor || 'N/A'}\nQty: ${quantity}\nPrice: ₦${Number(product.price).toLocaleString()}\n\nPlease confirm availability and arrange delivery. Thank you!`;
     window.open(`https://wa.me/${number}?text=${encodeURIComponent(message)}`, "_blank");
   };
 
@@ -142,7 +142,7 @@ export default function ProductModal({ product, onClose }: ProductModalProps) {
               {product.stock > 0 ? "Add to Cart" : "Out of Stock"}
             </Button>
             <Button variant="outline" onClick={handleDirectOrder} disabled={product.stock <= 0} className="w-full">
-              Order via WhatsApp
+              Order
             </Button>
           </div>
         </div>
