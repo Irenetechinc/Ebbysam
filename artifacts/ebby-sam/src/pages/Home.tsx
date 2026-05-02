@@ -65,7 +65,7 @@ export default function Home() {
         <div ref={heroRef} className="relative z-10 text-center px-4 max-w-5xl mx-auto w-full mt-16">
           <p className="gsap-reveal text-primary uppercase tracking-[0.3em] text-xs md:text-sm mb-5 font-medium">New Collection 2026</p>
           <h1 className="gsap-reveal font-display text-6xl sm:text-7xl md:text-8xl lg:text-9xl text-foreground font-bold mb-5 tracking-wide drop-shadow-2xl">
-            <span className="gold-gradient">EBY</span> SAM
+            <span className="gold-gradient">EBY - </span> SAM FASHION COLLECTIONS
           </h1>
           <p className="gsap-reveal text-base md:text-xl lg:text-2xl text-foreground/80 font-light tracking-widest uppercase mb-10 max-w-2xl mx-auto">
             Where Elegance Meets Excellence
