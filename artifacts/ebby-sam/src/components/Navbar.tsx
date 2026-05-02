@@ -49,7 +49,7 @@ export default function Navbar() {
 
           {/* Logo */}
           <Link href="/" className="font-display text-xl md:text-3xl font-bold tracking-widest text-primary flex-1 text-center md:text-left">
-            EBY-SAM FASHION COLLECTIONS
+            EBY-SAM
           </Link>
 
           {/* Desktop Links */}
