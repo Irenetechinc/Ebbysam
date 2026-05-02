@@ -1,4 +1,4 @@
-import { Instagram, Tiktok, Facebook } from 'lucide-react';
+import { Instagram, Twitter, Facebook } from 'lucide-react';
 import { Link } from 'wouter';
 
 export default function Footer() {
@@ -35,7 +35,7 @@ export default function Footer() {
                 <Instagram size={18} />
               </a>
               <a href="https://www.tiktok.com/@ebysam.collection?_r=1&_t=ZS-95TUwPuD5Eb " className="w-10 h-10 rounded-full border border-border flex items-center justify-center text-foreground hover:border-primary hover:text-primary transition-all">
-                <Tiktok size={18} />
+                <Twitter size={18} />
               </a>
               <a href="https://www.facebook.com/share/18e75jq62K/ " className="w-10 h-10 rounded-full border border-border flex items-center justify-center text-foreground hover:border-primary hover:text-primary transition-all">
                 <Facebook size={18} />
