@@ -29,7 +29,7 @@ export default function AdminLogin({ onSuccess }: Props) {
       <div className="w-full max-w-sm">
         <div className="text-center mb-10">
           <h1 className="font-display text-3xl text-primary tracking-widest mb-2">
-            EBBY SAM
+            EBY SAM
           </h1>
           <p className="text-xs uppercase tracking-[0.3em] text-muted-foreground">
             Atelier Administration
