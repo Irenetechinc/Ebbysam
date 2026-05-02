@@ -7,7 +7,7 @@ export default function Footer() {
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="grid grid-cols-1 md:grid-cols-4 gap-12 mb-16">
           <div className="md:col-span-2">
-            <h2 className="font-display text-3xl font-bold tracking-widest text-primary mb-6">EBY SAM FASHION COLLECTION</h2>
+            <h2 className="font-display text-3xl font-bold tracking-widest text-primary mb-6">EBY-SAM FASHION COLLECTIONS</h2>
             <p className="text-muted-foreground leading-relaxed max-w-sm">
               Where Elegance Meets Excellence. Redefining luxury through meticulously crafted clothing, striking accessories, and timeless jewelry.
             </p>
@@ -45,7 +45,7 @@ export default function Footer() {
         </div>
         
         <div className="border-t border-border pt-8 flex flex-col md:flex-row justify-between items-center text-sm text-muted-foreground">
-          <p>&copy; {new Date().getFullYear()} Eby Sam Fashion Luxury. All rights reserved.</p>
+          <p>&copy; {new Date().getFullYear()} Eby-Sam Fashion Luxury. All rights reserved.</p>
           <div className="flex space-x-6 mt-4 md:mt-0">
             <a href="#" className="hover:text-primary transition-colors">Privacy Policy</a>
             <a href="#" className="hover:text-primary transition-colors">Terms of Service</a>
