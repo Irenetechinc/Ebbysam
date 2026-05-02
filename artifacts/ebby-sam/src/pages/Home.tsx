@@ -119,7 +119,7 @@ export default function Home() {
           <span className="text-primary uppercase tracking-[0.3em] text-xs md:text-sm font-bold mb-3 md:mb-4 block">The Brand</span>
           <h2 className="text-3xl md:text-5xl lg:text-6xl font-display text-foreground mb-5 md:mb-8">Uncompromising Quality</h2>
           <p className="text-base md:text-xl lg:text-2xl text-foreground/70 font-light leading-relaxed">
-            Every Ebby Sam piece is meticulously crafted using only the finest materials. We believe true luxury whispers rather than shouts. Experience fashion that transcends seasons.
+            Every Eby Sam piece is meticulously crafted using only the finest materials. We believe true luxury whispers rather than shouts. Experience fashion that transcends seasons.
           </p>
         </div>
       </section>
